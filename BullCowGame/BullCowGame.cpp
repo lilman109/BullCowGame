@@ -7,6 +7,9 @@
 //
 
 #include <iostream>
+#include <vector>
+#include <time.h>
+#include <stdio.h>
 
 #include "BullCowGame.h"
 
@@ -23,12 +26,29 @@ BullCowGame::BullCowGame()
 
 void BullCowGame::reset()
 {
-    const FString HIDDEN_WORD = "donkey";
+    const FString HIDDEN_WORD = this->getRandomHiddenWord();
     myHiddenWord = HIDDEN_WORD;
     myCurrentTry = 1;
     gameIsWon = false;
 
     return;
+}
+
+// vector of hidden words
+FString BullCowGame::getRandomHiddenWord()
+{
+    std::vector<FString> randomHiddenWord
+    {
+        ("donkey"),
+        ("mars"),
+        ("earth"),
+        ("planet"),
+    };
+
+    int size = static_cast<int>(randomHiddenWord.size());
+    srand((unsigned)time(NULL));
+
+    return randomHiddenWord.at(rand() % size);
 }
 
 // returns max try count
@@ -39,7 +59,8 @@ int32 BullCowGame::getMaxTry() const
         { 3, 4  },
         { 4, 7  },
         { 5, 9  },
-        { 6, 11 }
+        { 6, 11 },
+        { 7, 15 }
     };
 
     return wordLengthToMaxTries[myHiddenWord.length()];
